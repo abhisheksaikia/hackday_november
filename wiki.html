@@ -38,7 +38,7 @@
           var lat = center.lat;
           var lon = center.lng;
 
-            var API_ENDPOINT = 'https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=1000&gscoord='+lat+'|'+lon+'&format=json&gslimit=1000&callback=?';
+            var API_ENDPOINT = 'https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=1000&gscoord='+lat+'|'+lon+'&format=json&gslimit=1000 &callback=?';
 
         // body...
         $.getJSON(API_ENDPOINT, {
