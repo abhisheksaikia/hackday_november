@@ -16,52 +16,52 @@
 
 <!-- jQuery is required for this example. -->
 <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+
 <script>
-L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fpa2lhLWFiaGlzaGVrOCIsImEiOiJhNTY1ZTBkZDYyMTlmMmRkY2E4OGM3ZTgzYjZkMjgzZSJ9.nwcECTyhbPI2gpOWXXvDAw';
-var map = L.mapbox.map('map', 'mapbox.emerald')
-    .setView([12.9667, 77.5667], 10);
+  L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fpa2lhLWFiaGlzaGVrOCIsImEiOiJhNTY1ZTBkZDYyMTlmMmRkY2E4OGM3ZTgzYjZkMjgzZSJ9.nwcECTyhbPI2gpOWXXvDAw';
+  var map = L.mapbox.map('map', 'mapbox.emerald')
+      .setView([12.9667, 77.5667], 10);
 
-// Credit Foursquare for their wonderful data
-map.attributionControl
-    .addAttribution('<a href="https://www.zomato.com/">Restaurant data from Zomato</a>');
+  // Credit Zomato for their wonderful data
+  map.attributionControl
+      .addAttribution('<a href="https://www.zomato.com/">Restaurant data from Zomato</a>');
 
-// Changed the API key to your own
-// NOTE: CHANGE THESE VALUES TO YOUR OWN:
-// Otherwise they can be cycled or deactivated with zero notice.
-var API_Key = '4acaa9efb1a01d979d46eb8f7eb52037';
+  // Changed the API key to your own
+  // NOTE: CHANGE THESE VALUES TO YOUR OWN:
+  // Otherwise they can be cycled or deactivated with zero notice.
+  var API_Key = '4acaa9efb1a01d979d46eb8f7eb52037';
 
-// https://developers.zomato.com/
-var API_ENDPOINT = 'https://developers.zomato.com/api/v2.1/search?entity_id=4&entity_type=city&count=100&sort=rating&order=desc';
+  // https://developers.zomato.com/
+  var API_ENDPOINT = 'https://developers.zomato.com/api/v2.1/search?entity_id=4&entity_type=city&count=100&sort=rating&order=desc';
 
-// Keep our place markers organized in a nice group.
-var ZomatoPlaces = L.layerGroup().addTo(map);
+  // Keep our place markers organized in a nice group.
+  var ZomatoPlaces = L.layerGroup().addTo(map);
 
-// Use jQuery to make an AJAX request to Foursquare to load markers data.
-$.getJSON(API_ENDPOINT
-    .replace('CLIENT_ID', CLIENT_ID)
-    .replace('CLIENT_SECRET', CLIENT_SECRET)
-    .replace('LATLON', map.getCenter().lat +
-        ',' + map.getCenter().lng), function(result, status) {
+  // Use jQuery to make an AJAX request to Zomato to load markers data.
+  $.getJSON(API_ENDPOINT
+      .replace('API_Key', 4acaa9efb1a01d979d46eb8f7eb52037)
+      .replace('LATLON', map.getCenter().lat +
+          ',' + map.getCenter().lng), function(result, status) {
 
-    if (status !== 'success') return alert('Request to Foursquare failed');
+      if (status !== 'success') return alert('Request to Zomato failed');
 
-    // Transform each venue result into a marker on the map.
-    for (var i = 0; i < result.response.venues.length; i++) {
-      var venue = result.response.venues[i];
-      var latlng = L.latLng(venue.location.lat, venue.location.lng);
-      var marker = L.marker(latlng, {
-          icon: L.mapbox.marker.icon({
-            'marker-color': '#BE9A6B',
-            'marker-symbol': 'cafe',
-            'marker-size': 'large'
+      // Transform each venue result into a marker on the map.
+      for (var i = 0; i < result.response.venues.length; i++) {
+        var venue = result.response.venues[i];
+        var latlng = L.latLng(venue.location.lat, venue.location.lng);
+        var marker = L.marker(latlng, {
+            icon: L.mapbox.marker.icon({
+              'marker-color': '#BE9A6B',
+              'marker-symbol': 'restaurant',
+              'marker-size': 'large'
+            })
           })
-        })
-      .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
-        venue.name + '</a></strong>')
-        .addTo(foursquarePlaces);
-    }
+        .bindPopup('<strong><a href=" ' + venue.id + '">' +
+          venue.name + '</a></strong>')
+          .addTo(ZomatoPlaces);
+      }
 
-});
+  });
 </script>
 </body>
 </html>
