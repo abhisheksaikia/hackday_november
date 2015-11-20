@@ -45,10 +45,10 @@
 
       if (status !== 'success') return alert('Request to Zomato failed');
 
-      // Transform each venue result into a marker on the map.
-      for (var i = 0; i < result.response.venues.length; i++) {
-        var venue = result.response.venues[i];
-        var latlng = L.latLng(venue.location.lat, venue.location.lng);
+      // Transform each name result into a marker on the map.
+      for (var i = 0; i < result.response.names.length; i++) {
+        var name = result.response.names[i];
+        var latlng = L.latLng(name.location.lat, name.location.lng);
         var marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
               'marker-color': '#BE9A6B',
@@ -56,8 +56,8 @@
               'marker-size': 'large'
             })
           })
-        .bindPopup('<strong><a href=" ' + venue.id + '">' +
-          venue.name + '</a></strong>')
+        .bindPopup('<strong><a href=" ' + name.id + '">' +
+          name.name + '</a></strong>')
           .addTo(ZomatoPlaces);
       }
 
