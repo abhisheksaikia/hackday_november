@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8 />
-<title>Places from Zomato</title>
+<title>Places from Factual</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
@@ -29,19 +29,28 @@
   // Changed the API key to your own
   // NOTE: CHANGE THESE VALUES TO YOUR OWN:
   // Otherwise they can be cycled or deactivated with zero notice.
-  var API_Key = '4acaa9efb1a01d979d46eb8f7eb52037';
+  var API_key = '4acaa9efb1a01d979d46eb8f7eb52037';
 
   // https://developers.zomato.com/
-  var API_ENDPOINT = 'https://developers.zomato.com/api/v2.1/search?entity_id=4&entity_type=city&count=100&sort=rating&order=desc';
+  var API_ENDPOINT = 'https://developers.zomato.com/api/v2.1/search'; // ?entity_id=4&entity_type=city&count=10&sort=rating&order=desc';
 
   // Keep our place markers organized in a nice group.
   var ZomatoPlaces = L.layerGroup().addTo(map);
 
+  $.ajaxSetup({
+    headers : {
+      'user_key' : API_key
+    }
+  });
+
   // Use jQuery to make an AJAX request to Zomato to load markers data.
-  $.getJSON(API_ENDPOINT
-      .replace('API_Key', 4acaa9efb1a01d979d46eb8f7eb52037)
-      .replace('LATLON', map.getCenter().lat +
-          ',' + map.getCenter().lng), function(result, status) {
+  $.getJSON(API_ENDPOINT, {
+      entity_id: 4,
+      entity_type: 'city',
+      count: 10,
+      sort: 'rating',
+      order: 'desc'
+    }, function(result, status) {
 
       if (status !== 'success') return alert('Request to Zomato failed');
 
